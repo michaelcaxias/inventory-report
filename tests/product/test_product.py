@@ -1,6 +1,7 @@
 from inventory_report.inventory.product import Product
 from datetime import date
 
+
 def test_cria_produto():
     today = date.today()
     product = Product(
