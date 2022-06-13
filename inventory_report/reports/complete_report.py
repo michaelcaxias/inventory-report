@@ -1,4 +1,3 @@
-from typing import Counter
 from inventory_report.reports.simple_report import SimpleReport
 from collections import Counter
 
