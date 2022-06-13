@@ -1,5 +1,5 @@
 from typing import Counter
-from simple_report import SimpleReport
+from inventory_report.reports.simple_report import SimpleReport
 from collections import Counter
 
 
@@ -18,7 +18,8 @@ class CompleteReport(SimpleReport):
             company_name_and_stock += f'- {company[0]}: {company[1]}\n'
 
         return (
-          'Produtos estocados por empresa: \n'
+          f'{super().generate(products)}\n'
+          'Produtos estocados por empresa:\n'
           f'{company_name_and_stock}'
         )
 
