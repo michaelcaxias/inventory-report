@@ -6,13 +6,17 @@ class SimpleReport:
         return min([product["data_de_fabricacao"] for product in products])
 
     def get_next_expiration_date(self, products):
-        filter_nexts_projects = filter(lambda product: product["data_de_validade"] > str(date.today()), products)
-        return min(product["data_de_validade"] for product in filter_nexts_projects)
-
+        filter_nexts_projects = filter(
+          lambda product: product["data_de_validade"] > str(date.today()),
+          products
+        )
+        return min(
+          [product["data_de_validade"] for product in filter_nexts_projects]
+        )
 
     def generate(self, products):
         oldest_fabrication_date = self.get_oldest_fabrication_date(products)
-        next_expiration_date = ""
+        next_expiration_date = self.get_next_expiration_date(products)
         company_with_more_products = ""
 
         return f""""
@@ -21,7 +25,8 @@ class SimpleReport:
           Empresa com mais produtos: {company_with_more_products}
         """
 
-test_produts =    [
+
+test_produts = [
      {
        "id": 1,
        "nome_do_produto": "CADEIRA",
