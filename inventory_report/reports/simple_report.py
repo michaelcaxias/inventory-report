@@ -20,6 +20,7 @@ class SimpleReport:
             [product["nome_da_empresa"] for product in products]
         ).most_common(1)[0][0]
 
+    @classmethod
     def generate(self, products):
         oldest_fabrication_date = self.get_oldest_fabrication_date(products)
         next_expiration_date = self.get_next_expiration_date(products)
