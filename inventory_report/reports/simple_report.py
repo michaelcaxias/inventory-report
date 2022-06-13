@@ -8,7 +8,7 @@ class SimpleReport:
 
     def get_next_expiration_date(self, products):
         filter_nexts_projects = filter(
-            lambda product: product["data_de_validade"] > str(date.today()),
+            lambda product: product["data_de_validade"] >= str(date.today()),
             products,
         )
         return min(
