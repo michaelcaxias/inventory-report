@@ -2,29 +2,32 @@ from collections import Counter
 from datetime import date
 
 
+def get_oldest_fabrication_date(products):
+    return min([product["data_de_fabricacao"] for product in products])
+
+
+def get_next_expiration_date(products):
+    filter_nexts_projects = filter(
+        lambda product: product["data_de_validade"] > str(date.today()),
+        products,
+    )
+    return min(
+        [product["data_de_validade"] for product in filter_nexts_projects]
+    )
+
+
+def get_company_more_products(products):
+    return Counter(
+        [product["nome_da_empresa"] for product in products]
+    ).most_common(1)[0][0]
+
+
 class SimpleReport:
-    def get_oldest_fabrication_date(self, products):
-        return min([product["data_de_fabricacao"] for product in products])
 
-    def get_next_expiration_date(self, products):
-        filter_nexts_projects = filter(
-            lambda product: product["data_de_validade"] > str(date.today()),
-            products,
-        )
-        return min(
-            [product["data_de_validade"] for product in filter_nexts_projects]
-        )
-
-    def get_company_more_products(self, products):
-        return Counter(
-            [product["nome_da_empresa"] for product in products]
-        ).most_common(1)[0][0]
-
-    @classmethod
     def generate(self, products):
-        oldest_fabrication_date = self.get_oldest_fabrication_date(products)
-        next_expiration_date = self.get_next_expiration_date(products)
-        company_with_more_products = self.get_company_more_products(products)
+        oldest_fabrication_date = get_oldest_fabrication_date(products)
+        next_expiration_date = get_next_expiration_date(products)
+        company_with_more_products = get_company_more_products(products)
 
         return f""""
           Data de fabricação mais antiga: {oldest_fabrication_date}
@@ -45,5 +48,5 @@ test_produts = [
     }
 ]
 
-simple_report = SimpleReport().get_company_more_products(test_produts)
+simple_report = SimpleReport().generate(test_produts)
 print(simple_report)
