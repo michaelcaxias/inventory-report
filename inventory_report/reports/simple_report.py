@@ -2,12 +2,9 @@ from collections import Counter
 from datetime import date
 
 
-
-
 class SimpleReport:
     def get_oldest_fabrication_date(self, products):
         return min([product["data_de_fabricacao"] for product in products])
-
 
     def get_next_expiration_date(self, products):
         filter_nexts_projects = filter(
@@ -18,7 +15,6 @@ class SimpleReport:
             [product["data_de_validade"] for product in filter_nexts_projects]
         )
 
-
     def get_company_more_products(self, products):
         return Counter(
             [product["nome_da_empresa"] for product in products]
@@ -26,10 +22,15 @@ class SimpleReport:
 
     @classmethod
     def generate(cls, products):
-        oldest_fabrication_date = cls.get_oldest_fabrication_date(cls, products)
-        next_expiration_date = cls.get_next_expiration_date(cls, products)
-        company_with_more_products = cls.get_company_more_products(cls, products)
-
+        oldest_fabrication_date = cls.get_oldest_fabrication_date(
+          cls, products
+          )
+        next_expiration_date = cls.get_next_expiration_date(
+          cls, products
+          )
+        company_with_more_products = cls.get_company_more_products(
+          cls, products
+          )
 
         return (
             f"Data de fabricação mais antiga: {oldest_fabrication_date}\n"
