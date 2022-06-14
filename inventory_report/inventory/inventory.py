@@ -1,5 +1,6 @@
 import csv
 import json
+import xmltodict
 from inventory_report.reports.simple_report import SimpleReport
 from inventory_report.reports.complete_report import CompleteReport
 
@@ -18,6 +19,13 @@ class JSONReader:
             return products
 
 
+class XMLReader:
+    def read(self, path):
+        with open(path) as file:
+            products = xmltodict.parse(file.read())
+            return products
+
+
 class Inventory:
     report_types = {"simples": SimpleReport, "completo": CompleteReport}
 
@@ -33,11 +41,13 @@ class Inventory:
         """
         file_extension_from_path = path.split(".")[-1]
 
-        products = ''
+        products = ""
 
-        if file_extension_from_path == 'csv':
+        if file_extension_from_path == "csv":
             products = CSVReader.read(cls, path)
-        if file_extension_from_path == 'json':
+        if file_extension_from_path == "json":
             products = JSONReader.read(cls, path)
+        if file_extension_from_path == "xml":
+            products = XMLReader.read(cls, path)
 
         return cls.report_types[type].generate(products)
