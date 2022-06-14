@@ -33,14 +33,11 @@ class Inventory:
         """
         file_extension_from_path = path.split(".")[-1]
 
-        file_reader = {
-            "csv": CSVReader.read(cls, path),
-            "json": JSONReader.read(cls, path),
-        }
+        products = ''
 
-        products = file_reader[file_extension_from_path]
+        if file_extension_from_path == 'csv':
+            products = CSVReader.read(cls, path)
+        if file_extension_from_path == 'json':
+            products = JSONReader.read(cls, path)
 
         return cls.report_types[type].generate(products)
-
-
-test = Inventory.import_data("inventory_report/data/inventory.json", "simples")
