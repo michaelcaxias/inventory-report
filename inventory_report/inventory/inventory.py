@@ -23,7 +23,7 @@ class XMLReader:
     def read(self, path):
         with open(path) as file:
             products = xmltodict.parse(file.read())
-            return products
+            return products["dataset"]["record"]
 
 
 class Inventory:
